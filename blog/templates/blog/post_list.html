@@ -3,8 +3,13 @@
 <h1>Blog</h1>
 {% for p in post_list %}
 <!-- Blog post-->
-<div class="card mb-4">
+<div class="card mb-4" id="posr-{{p.pk}}">
     <div class="card-body">
+        {% if p.cateory %}
+        <span class="badge badge-secondary float-right">{{p.category}}</span>
+        {% else %}
+        <span class="badge badge-secondary float-right">미분류</span>
+        {% endif %}
         <h2 class="'card-title">{{p.title}}</h2>
         <p class="card-text">{{p.content}}</p>
         <a href="{{p.get_absolute_url}}" class="btn btn-primary">Read More &rarr;</a>

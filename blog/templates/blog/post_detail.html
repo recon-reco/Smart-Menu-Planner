@@ -13,8 +13,12 @@
                     <!-- Post meta content-->
                     <div class="text-muted fst-italic mb-2">{{post.created_at}}</div>
                     <!-- Post categories-->
-                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-                    <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+                    {% if post.cateory %}
+                    <span class="badge badge-secondary float-right">{{post.category}}</span>
+                    {% else %}
+                    <span class="badge badge-secondary float-right">미분류</span>
+                    {% endif %}
+
                 </header>
                 <!-- Post content-->
                 <p>{{post.content}}</p>
@@ -76,6 +80,7 @@
                     </div>
                 </div>
             </section>
+
         </div>
     </div>
 </div>
@@ -98,7 +103,7 @@
 
     <h1>{{post.title}}</h1>
     <h4>{{post.created_at}}</h4>
-    <p>{{post.content}}</p>
+    <p>{{post.content}}<p>
     <hr />
 
 </body>
