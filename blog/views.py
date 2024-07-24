@@ -1,8 +1,11 @@
 from typing import Any
+from django.http import HttpRequest
+from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
 from .models import Post, Category
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 
 # Create your views here.
 
@@ -62,6 +65,19 @@ class PostCreate(LoginRequiredMixin, CreateView):
             return super(PostCreate, self).form_valid(form)
         else:
             return redirect('/blog/')
+
+class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    fields=['title','content','category']
+    
+    template_name = 'blog/post_update_form.html'
+    #포스트작성자만 포스트를 수정할 수 있다.
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs:Any):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionErrors
+
 
 """
 def index(request):
