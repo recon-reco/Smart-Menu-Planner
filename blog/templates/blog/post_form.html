@@ -1,0 +1,11 @@
+{% extends 'blog/base_full_width.html' %}
+{% block head_title %}Create Post - Blog{% endblock %}
+{% block main-area %}
+<h1>Create New Post</h1>
+<hr />
+<!--form : 사용자가 기록한 값을 서버로 보내기 위한 용도-->
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{form}}</table>
+    <button type="submit" class="'btn btn-primary float-right">Submit</button>
+</form>
+{% endblock %}
