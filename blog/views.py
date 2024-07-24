@@ -1,8 +1,11 @@
 from typing import Any
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Post, Category
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
+
 
 class PostList(ListView):
     model = Post
@@ -43,7 +46,22 @@ def category_page(request, slug):
             'category':category,
         }
     )
+class PostCreate(LoginRequiredMixin, CreateView):
+    model = Post
+    fields = ['title', 'content', 'category']
 
+    def test_ftn(self):
+        #포스트 작성 페이지 접근 권한 확인
+        return self.request.user.is_superuser or self.request.user.is_staff
+
+    def form_valid(self, form):
+        #Post 작성 권한 : 로그인 & 관리자 또는 스태프
+        current_user = self.request.user
+        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
+            form.instance.author =  current_user
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/blog/')
 
 """
 def index(request):

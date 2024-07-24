@@ -24,7 +24,7 @@ class Post(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    #author : 추후 작성 예정
+    
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True) 
     ##models.SET_NULL : 사용자가 삭제되면 게시물의 작성자는 null이 된다.
     category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
