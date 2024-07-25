@@ -9,7 +9,9 @@
         class="fas fa-pen"></i>&nbsp;&nbsp;New Post</a>
 {% endif %}
 {% endif %}
-<h1>Blog{% if category %}<span class="badge badge-secondary">{{category}}</span>{% endif %}</h1>
+<h1>Blog
+    {% if search_info %}<small class="text-muted">{{search_info}}</small>{% endif %}
+    {% if category %}<span class="badge badge-secondary">{{category}}</span>{% endif %}</h1>
 {% for p in post_list %}
 <!-- Blog post-->
 <div class="card mb-4" id="posr-{{p.pk}}">

@@ -1,4 +1,5 @@
 from typing import Any
+from django.db.models.query import QuerySet
 from django.http import HttpRequest
 from django.http.response import HttpResponse
 from django.shortcuts import render, redirect
@@ -6,8 +7,11 @@ from .models import Post, Category
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 
 # Create your views here.
+
+
 
 
 class PostList(ListView):
@@ -76,8 +80,23 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionErrors
+            raise PermissionDenied
 
+class PostSearch(PostList):
+    paginate_by=None #한 페이지의 포스트 수 
+
+    def get_queryset(self):
+        q= self.kwargs['q']
+        post_list = Post.objects.filter(
+            Q(title__contains=q)
+        ).distinct()
+        return post_list
+    
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
+        return context
 
 """
 def index(request):
