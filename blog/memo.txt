@@ -27,3 +27,21 @@ form : 사용자가 기록한 값을 서버로 보내기 위한 용도
 
 
 views.py 의 success_url = reverse_lazy('post_list') 이 코드에 대해 설명해줄래?
+
+
+
+
++++기존 포스트 업데이트 html
+{% extends 'blog/base_full_width.html' %}
+
+{% block head_title %}Edit Post - Blog{% endblock %}
+{% block main-area %}
+<h1>Edit Post</h1>
+<hr />
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>
+        {{form}}
+    </table>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+</form>
+{% endblock %}

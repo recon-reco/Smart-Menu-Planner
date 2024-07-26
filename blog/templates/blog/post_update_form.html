@@ -4,10 +4,36 @@
 {% block main-area %}
 <h1>Edit Post</h1>
 <hr />
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
-    <table>
-        {{form}}
-    </table>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h3>Main Ingredients</h3>
+    {{ formset.management_form }}
+    <div id="main-ingredients">
+        {% for form in formset %}
+            <div class="ingredient-form">
+                {{ form.as_p }}
+                {% if form.instance.pk %}
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" name="{{ form.prefix }}-DELETE" id="{{ form.prefix }}-DELETE">
+                        <label class="form-check-label" for="{{ form.prefix }}-DELETE">Delete</label>
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-ingredient" class="btn btn-secondary">Add Ingredient</button>
     <button type="submit" class="btn btn-primary float-right">Submit</button>
 </form>
+
+<script>
+    document.getElementById('add-ingredient').addEventListener('click', function() {
+        var formIndex = document.querySelectorAll('.ingredient-form').length;
+        var newForm = document.createElement('div');
+        newForm.classList.add('ingredient-form');
+        var emptyForm = '{{ formset.empty_form.as_p|escapejs }}';
+        newForm.innerHTML = emptyForm.replace(/__prefix__/g, formIndex);
+        document.getElementById('main-ingredients').appendChild(newForm);
+    });
+</script>
 {% endblock %}

@@ -105,8 +105,40 @@ class PostCreate(LoginRequiredMixin, CreateView):
             return super(PostCreate, self).form_valid(form)
         else:
             return redirect('/blog/')"""
-
 class PostUpdate(LoginRequiredMixin, UpdateView):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/post_update_form.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user == self.get_object().author:
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['formset'] = MainIngredientFormSet(self.request.POST, instance=self.get_object())
+        else:
+            context['formset'] = MainIngredientFormSet(instance=self.get_object())
+        return context
+
+    def form_valid(self, form):
+        current_user = self.request.user
+        if current_user.is_authenticated and current_user == form.instance.author:
+            context = self.get_context_data()
+            formset = context['formset']
+            if formset.is_valid():
+                response = super().form_valid(form)
+                formset.instance = self.object
+                formset.save()
+                return response
+            else:
+                return self.render_to_response(self.get_context_data(form=form))
+        else:
+            return redirect('/blog/')
+"""##class PostUpdate(LoginRequiredMixin, UpdateView):
     model = Post
     fields=['title','content','category']
     
@@ -116,7 +148,7 @@ class PostUpdate(LoginRequiredMixin, UpdateView):
         if request.user.is_authenticated and request.user == self.get_object().author:
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionDenied
+            raise PermissionDenied"""
 
 class PostSearch(PostList):
     paginate_by=None #한 페이지의 포스트 수 
