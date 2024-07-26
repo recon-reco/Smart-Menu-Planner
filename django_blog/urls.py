@@ -16,11 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from blog.views import PostList  # PostListView를 임포트합니다.
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("blog/", include('blog.urls')),
+    path('admin/', admin.site.urls),
     path("",include('single_pages.urls')),
-    
-
+    path('blog/', include('blog.urls')),
 ]

@@ -1,0 +1,29 @@
+{% block head_title %}Create Post - Menu{% endblock %}
+{% block main-area %}
+<h1>Create New Post</h1>
+<hr />
+form : 사용자가 기록한 값을 서버로 보내기 위한 용도
+<form method="post" enctype="multipart/form-data">{% csrf_token %}
+    <table>{{form}}</table>
+    <button type="submit" class="'btn btn-primary float-right">Submit</button>
+</form>
+{% endblock %}
+
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h3>Main Ingredients</h3>
+    {{ formset.management_form }}
+    <div id="main-ingredients">
+        {% for form in formset %}
+        <div class="ingredient-form">
+            {{ form.as_p }}
+        </div>
+        {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary float-right">Submit</button>
+</form>
+
+
+views.py 의 success_url = reverse_lazy('post_list') 이 코드에 대해 설명해줄래?

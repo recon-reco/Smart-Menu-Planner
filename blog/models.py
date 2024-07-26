@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 import os
 
+from django.urls import reverse
+
 # Create your models here.
 
 #Category 기능 구현하기
@@ -34,5 +36,15 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return f'/blog/{self.pk}'
+    
+
+class MainIngredient(models.Model):
+    name = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=100)
+    serving_size = models.IntegerField()
+    post = models.ForeignKey(Post, related_name='main_ingredients', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name} ({self.quantity} for {self.serving_size} servings)'
     
 
