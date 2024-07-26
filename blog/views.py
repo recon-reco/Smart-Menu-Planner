@@ -166,11 +166,10 @@ class PostSearch(PostList):
         context['search_info'] = f'Search: {q} ({self.get_queryset().count()})'
         return context
 
-class DeletePostView(DeleteView):
+class DeletePostView(LoginRequiredMixin, DeleteView):
     model = Post
     template_name = 'blog/confirm_delete.html'
-    success_url = reverse_lazy('/blog/post_list')
-
+    success_url = '/blog/'
 
     def get_queryset(self):
         queryset = super().get_queryset()
