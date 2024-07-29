@@ -41,9 +41,7 @@
                                 {% for category in categories %}
                                 <li><a href="{{category.get_absolute_url}}">{{category}}</a></li>
                                 {% endfor %}
-                                <li>
-                                    <a href="/blog/category/no_category/">미분류({{no_category_post_count}})</a>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
@@ -88,27 +86,5 @@
                 });
             </script>
 </body>
-
-<!--
-    <head>
-        <meta charset="UTF-8">
-        <title>Blog</title>
-    </head>
-
-    <body>
-        <nav>
-            <a href="/">Main</a>
-            <a href="/blog/">Blog</a>
-            <a href="/about_me/">About Me</a>
-        </nav>
-        <h1>Blog</h1>
-        {% for p in post_list %}
-        <hr />
-        <h2><a href='{{p.get_absolute_url}}'>{{p.title}}</a></h2>
-        <h4>{{p.created_at}}</h4>
-        <p>{{p.content}}</p>
-        {% endfor %}
-    </body>
--->
 
 </html>
