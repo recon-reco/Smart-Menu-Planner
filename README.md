@@ -9,10 +9,10 @@
 <img width="779" alt="스크린샷 2024-07-30 오후 5 12 36" src="https://github.com/user-attachments/assets/61847694-2568-48d3-958e-58ddd0f68893">
 
 ## Projectに使った技術
-FrontEnd :　HTML, bootstrap, JS\n
-BackEnd : Django\n
-DB : sqlite3 -> MySQL\n
-version management : git\n
+FrontEnd :　HTML, bootstrap, JS\ n
+BackEnd : Django \n
+DB : sqlite3 -> MySQL \n
+version management : git \n
 
 ##　開発予定
 - Weekly Meal Appを Web Systemに具現
