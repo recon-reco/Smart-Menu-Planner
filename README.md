@@ -14,7 +14,7 @@ BackEnd : Django
 DB : sqlite3 -> MySQL    
 version management : git    
 
-##　開発予定
+## 開発予定
 - Weekly Meal Appを Web Systemに具現
 - 発注量予測機能具現
 -　実査表生成機能具現
