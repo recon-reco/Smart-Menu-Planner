@@ -1,4 +1,6 @@
-![SmartMenuPlanner_Flowchart](https://github.com/user-attachments/assets/b057b3ff-3a18-4370-8f22-d8dded8e29f7)# Project 名: Smart Menu Planner
+# Project 名: Smart Menu Planner
+
+![SmartMenuPlanner_Flowchart](https://github.com/user-attachments/assets/b057b3ff-3a18-4370-8f22-d8dded8e29f7)
 
 ## プロジェト概要
 目的：手軽に週間献立の生成及び利用客の予測による食材管理の効率化
