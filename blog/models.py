@@ -12,5 +12,5 @@ class Post(models.Model):
     def __str__(self): #Post Listでpost.title
         return f'[{self.pk}]{self.title}'
 
-    def get_absolute_url(self, pk):
+    def get_absolute_url(self):
         return f'/blog/{self.pk}/'
