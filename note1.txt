@@ -1,0 +1,26 @@
+[Process]
+django-admin startproject DjangoBlog_prj .
+python manage.py startapp blog 
+python manage.py startapp single_pages
+python manage.py migrate
+-> settings.py : INSTALLED _APPSに登録
+-> settings.py TIME ZONE, USE_TZ 設定
+
+urls設定
+DjangoBlog_prj/urls.py : + include
+-> blog.urls
+-> single_pages.urls
+
+blog/urls.py
+blog/views.py
+
+blog Model : Post 定義
+-> makemigrations
+blog/admin.pyにmodel Post 登録
+
+
+
+
++++***+++
+migration : Model変更についての記録をDBに反映する。
+makemigrations ：Model変更についての記録

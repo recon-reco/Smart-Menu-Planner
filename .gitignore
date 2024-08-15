@@ -1,7 +1,8 @@
 venv/
 .idea/
 db.sqlite3
-
+migrations/
+study_note.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
