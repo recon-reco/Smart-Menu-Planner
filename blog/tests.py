@@ -6,6 +6,11 @@ class TestView(TestCase):
     def setUp(self):
         self.client=Client()
 
+    def navbar_test(self, soup):
+        navbar=soup.nav
+        self.assertIn('Blog', navbar.text)
+        self.assertIn('About Me', navbar.text)
+
     def test_post_list(self):
         ## Post List 仕組み　test
         #1.1 Get Post List page
@@ -17,9 +22,8 @@ class TestView(TestCase):
         self.assertEqual(response.status_code,200) 
         soup = BeautifulSoup(response.content, 'html.parser')
         self.assertEqual(soup.title.text, 'Blog')
-        navbar = soup.nav
-        self.assertIn('Blog', navbar.text)
-        self.assertIn('About Me', navbar.text)
+        
+        self.navbar_test(soup)
 
         ## There is no post
         self.assertEqual(Post.objects.count(), 0)
@@ -46,7 +50,7 @@ class TestView(TestCase):
 
         self.assertEqual(response.status_code, 200)
         print('success :200')
-
+        self.navbar_test(soup)
         main_area = soup.find('div', id='main-area')
         print(main_area.text)
         self.assertIn(post_001.title, main_area.text)
