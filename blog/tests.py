@@ -40,8 +40,8 @@ class TestView(TestCase):
         self.assertEqual(Post.objects.count(), 2)
         print("2 posts check")
         self.assertEqual(Post.objects.first().title, 'First Post')
-        print("First Post title")
-        resposnse = self.client.get('/blog/')
+
+        response = self.client.get('/blog/')
         soup = BeautifulSoup(response.content,'html.parser')
 
         self.assertEqual(response.status_code, 200)
@@ -49,9 +49,9 @@ class TestView(TestCase):
 
         main_area = soup.find('div', id='main-area')
         print(main_area.text)
-        #self.assertIn(post_001.title, main_area.text)
-        #self.assertIn(post_002.title, main_area.text)
+        self.assertIn(post_001.title, main_area.text)
+        self.assertIn(post_002.title, main_area.text)
 
-        #self.assertNotIn('no post yet', main_area.text)
+        self.assertNotIn('no post yet', main_area.text)
 
 
