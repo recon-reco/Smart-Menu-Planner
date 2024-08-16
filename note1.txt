@@ -2,6 +2,11 @@ To Do
 ー　Navigation Bar test
 ー 作成者
 ー　カテゴリ
+＞　Post List, Post Detailに必要
+＞　一つのカテゴリーをクリックしたら、該当カテゴリーページに移動
+＞　該当のがてゴリーの全てのポストが出力
+＞　Post : Category =  N : 1
+
 ー　Post 登録・修正
 ー　Post 削除
 ー　Tag　機能
