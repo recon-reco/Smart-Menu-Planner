@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Blog List</title>
+    <title>Blog</title>
     <link href="{% static 'blog/bootstrap/bootstrap.min.css' %}" rel="stylesheet" media="screen">
 </head>
 
@@ -82,7 +82,8 @@
     </div>
     <div class="container">
         <div class="row">
-            <div class="col-md-8 col-lg-9">
+            <div class="col-md-8 col-lg-9" id="main-area">
+                {% if post_list.exist %}
                 {% for p in post_list%}
                 <!-- Blog post-->
                 <div class="card mb-4">
@@ -94,7 +95,7 @@
                     <div class="card-body">
                         <div class="small text-muted">{{p.created_at}}</div>
                         <h2 class="card-title h4">{{p.title}}</h2>
-                        <p class="card-text">{{p.content}}</p>
+                        <p class="card-text">{{p.content|truncatewords:30}}</p>
                         <a class="btn btn-primary" href="{{ p.get_absolute_url }}">Read more →</a>
                     </div>
                     <div class="card-footer text-muted">
@@ -103,6 +104,9 @@
                     </div>
                 </div>
                 {% endfor %}
+                {% else %}
+                <h3>no post yet</h3>
+                {% endif %}
             </div>
 
             <!-- Side widgets-->

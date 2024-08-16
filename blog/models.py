@@ -9,7 +9,7 @@ class Post(models.Model):
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
     file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d', blank=True)
     #author
-    #hook_text
+    #hook_text = models.CharField(max_length=100, blank=True)
 
     def __str__(self): #Post Listでpost.title
         return f'[{self.pk}]{self.title}'
