@@ -1,22 +1,20 @@
-[Process]
-django-admin startproject DjangoBlog_prj .
-python manage.py startapp blog 
-python manage.py startapp single_pages
-python manage.py migrate
--> settings.py : INSTALLED _APPSに登録
--> settings.py TIME ZONE, USE_TZ 設定
+To Do 
+ー　Navigation Bar test
+ー 作成者
+ー　カテゴリ
+ー　Post 登録・修正
+ー　Post 削除
+ー　Tag　機能
+ー　markdown適用
+ー　Comment 機能
+ー　Main Page(Landing Page)
+ー　About Me Page 改善
 
-urls設定
-DjangoBlog_prj/urls.py : + include
--> blog.urls
--> single_pages.urls
+応用
+ー Docker
+- to AWS
+- domain 連結　：AWS, HTTPS, social login
 
-blog/urls.py
-blog/views.py
-
-blog Model : Post 定義
--> makemigrations
-blog/admin.pyにmodel Post 登録
 
 
 
