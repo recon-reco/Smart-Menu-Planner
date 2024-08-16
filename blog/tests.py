@@ -1,10 +1,19 @@
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
 from .models import Post
+from django.contrib.auth.models import User
 
 class TestView(TestCase):
     def setUp(self):
         self.client=Client()
+        self.user_kim = User.objects.create_user(
+            username='kim',
+            password='somepassword',
+        )
+        self.user_park = User.objects.create_user(
+            username='park',
+            password='somepassword',
+        )
 
     def navbar_test(self, soup):
         navbar = soup.nav
@@ -40,10 +49,13 @@ class TestView(TestCase):
         post_001 = Post.objects.create(
             title = 'First Post',
             content = 'Hello World',
+            author = self.user_kim,
+
         )
         post_002 = Post.objects.create(
             title = 'Project Sekai, Hatsune Miku',
             content = 'ようこそ、セカイへ',
+            author = self.user_park,
         )
         #3.2 Two Post Title exist in the Main Area
         #3.3 'There's no post yet' doesn't appear
@@ -59,9 +71,12 @@ class TestView(TestCase):
         self.navbar_test(soup)
 
         main_area = soup.find('div', id='main-area')
-        print(main_area.text)
+        #print(main_area.text)
         self.assertIn(post_001.title, main_area.text)
         self.assertIn(post_002.title, main_area.text)
+        
+        self.assertIn(self.user_kim.username.upper(), main_area.text)
+        self.assertIn(self.user_park.username.upper(), main_area.text)
 
         self.assertNotIn('no post yet', main_area.text)
 
