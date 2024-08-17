@@ -28,14 +28,14 @@ class TestView(TestCase):
             title = 'First Post',
             content = 'Hello World',
             author = self.user_kim,
-            category = self.categoty_programming,
+            category = self.category_programming,
 
         )
         self.post_002 = Post.objects.create(
             title = 'Project Sekai, Hatsune Miku',
             content = 'ようこそ、セカイへ',
             author = self.user_park,
-            category = self.categoty_game,
+            category = self.category_game,
 
         )
         self.post_003 = Post.objects.create(
@@ -78,16 +78,15 @@ class TestView(TestCase):
         self.navbar_test(soup)
 
         ## There is no post
-        self.assertEqual(Post.objects.count(), 0)
+        
         main_area = soup.find('div', id='main-area')
-        self.assertIn("no post yet", main_area.text)
 
         ## There are two post
         
         #3.2 Two Post Title exist in the Main Area
         #3.3 'There's no post yet' doesn't appear
-        self.assertEqual(Post.objects.count(), 2)
-        print("2 posts check")
+        self.assertEqual(Post.objects.count(), 3)
+        print("3 posts check")
         self.assertEqual(Post.objects.first().title, 'First Post')
 
         response = self.client.get('/blog/')
@@ -117,9 +116,39 @@ class TestView(TestCase):
 
         #no post
         Post.objects.all().delete()
-        self.assertEqaul(Post.objects.count(),0)
+        self.assertEqual(Post.objects.count(),0)
         reponse=self.client.get('/blog/')
         soup=BeautifulSoup(response.content, 'html.parser')
         main_area=soup.find('div', id='main-area')
         self.assertIn('no post yet', main_area.text)
+
+    def test_post_detail(self):
+        #url /blog/1
+        self.assertEqual(self.post_001.get_absolute_url(), '1/')
+        #response
+        response = self.client.get(self.post_001.get_absolute_url())
+        #200
+        self.assertEqual(response.status_code, 200)
+        #soup
+        soup = BeautifulSoup(response.content, 'html.parser')
+        #navbar
+        self.navbar_test(soup)
+        #category_card
+        self.category_card_test(soup)
+        #main_area
+        main_area=soup.find('div', id='main-area')
+        #post_area
+        post_area=soup.find('div', id='post-area')
+        #title
+        self.assertIn(post_area.title, post_area.text)
+        #category
+        self.assertIn(self.category_programming.name, post_area.text)
+
+        self.assertIn(self.user_kim.username.upper(), post_area.text)
+        self.assertIn(self.post_001.content, post_area.text)
+        
+
+
+    
+    
 

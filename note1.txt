@@ -6,6 +6,11 @@ To Do
 ＞　一つのカテゴリーをクリックしたら、該当カテゴリーページに移動
 ＞　該当のがてゴリーの全てのポストが出力
 ＞　Post : Category =  N : 1
+** カテゴリー　＞　Post Detail page url Error
+＞＞http://127.0.0.1:8000/blog/category/mysql/category/python/
+>> http://127.0.0.1:8000/blog/category/mysql/4/
+**　Post Detail page : cateory error : badge and category card
+
 
 ー　Post 登録・修正
 ー　Post 削除
