@@ -8,7 +8,9 @@ class Category(models.Model):
     """人が読めるURL生成"""
     def __str__(self):
         return self.name
-    
+    class Meta:
+        verbose_name_plural = 'Categories'
+
 class Post(models.Model):
     title = models.CharField(max_length=30)
     content = models.TextField()
@@ -17,15 +19,11 @@ class Post(models.Model):
     head_image = models.ImageField(upload_to='blog/images/%Y/%m/%d/', blank=True)
     file_upload = models.FileField(upload_to='blog/files/%Y/%m/%d', blank=True)
     author = models.ForeignKey(User, null=True ,on_delete=models.SET_NULL)
-    category = models.ForeignKey(Category, null=True, on_delete=models.SET_NULL)
-    #hook_text = models.CharField(max_length=100, blank=True)
-
-    def __str__(self): #Post Listでpost.title
-        return f'[{self.pk}]{self.title}:: {self.author}'
-
+    category = models.ForeignKey(Category, blank=True ,null=True, on_delete=models.SET_NULL)
+    #hook_text = models.CharField()
     def get_absolute_url(self):
-        return f'/blog/{self.pk}/'
-    
+        return f'{self.pk}/'
+
     def get_file_name(self):
         return os.path.basename(self.file_upload.name)
     

@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
-from .models import Post
+from .models import Post, Category
 from django.contrib.auth.models import User
 
 class TestView(TestCase):
@@ -14,6 +14,43 @@ class TestView(TestCase):
             username='park',
             password='somepassword',
         )
+
+        self.category_programming = Category.objects.create(
+            name='programming',
+            slug='programming',
+        )
+        self.category_game = Category.objects.create(
+            name='game',
+            slug='game',
+        )
+
+        self.post_001 = Post.objects.create(
+            title = 'First Post',
+            content = 'Hello World',
+            author = self.user_kim,
+            category = self.categoty_programming,
+
+        )
+        self.post_002 = Post.objects.create(
+            title = 'Project Sekai, Hatsune Miku',
+            content = 'ようこそ、セカイへ',
+            author = self.user_park,
+            category = self.categoty_game,
+
+        )
+        self.post_003 = Post.objects.create(
+            title = 'This Post has no category',
+            content = 'No Category',
+            author = self.user_park,
+        )
+        
+    def category_card_test(self,soup):
+        """Categories Widget Test"""
+        cateries_card=soup.find('div', id='categories-card')
+        self.assertIn('Categories', cateries_card.text)
+        self.assertIn(f'{self.category_programming.name}({self.category_programming.post_set.count()})',cateries_card.text), 
+        self.assertIn(f'{self.category_game.name}({self.category_game.post_set.count()})',cateries_card.text), 
+        self.assertIn(f'未分類(1)', cateries_card.text)   
 
     def navbar_test(self, soup):
         navbar = soup.nav
@@ -46,17 +83,7 @@ class TestView(TestCase):
         self.assertIn("no post yet", main_area.text)
 
         ## There are two post
-        post_001 = Post.objects.create(
-            title = 'First Post',
-            content = 'Hello World',
-            author = self.user_kim,
-
-        )
-        post_002 = Post.objects.create(
-            title = 'Project Sekai, Hatsune Miku',
-            content = 'ようこそ、セカイへ',
-            author = self.user_park,
-        )
+        
         #3.2 Two Post Title exist in the Main Area
         #3.3 'There's no post yet' doesn't appear
         self.assertEqual(Post.objects.count(), 2)
@@ -69,15 +96,30 @@ class TestView(TestCase):
         self.assertEqual(response.status_code, 200)
         print('success :200')
         self.navbar_test(soup)
+        self.category_card_test(soup)
 
         main_area = soup.find('div', id='main-area')
-        #print(main_area.text)
-        self.assertIn(post_001.title, main_area.text)
-        self.assertIn(post_002.title, main_area.text)
+        post_001 = main_area.find('div', id='post-1')
+        self.assertIn(self.post_001.title, post_001.text)
+        self.assertIn(self.post_001.category.name, post_001.text)
+        post_002 = main_area.find('div', id='post-2')
+        self.assertIn(self.post_002.title, post_002.text)
+        self.assertIn(self.post_002.category.name, post_002.text)
+        post_003 = main_area.find('div', id='post-3')
+        self.assertIn(self.post_003.title, post_003.text)
+        self.assertIn(self.post_003.category.name, post_003.text)
+       
         
         self.assertIn(self.user_kim.username.upper(), main_area.text)
         self.assertIn(self.user_park.username.upper(), main_area.text)
 
         self.assertNotIn('no post yet', main_area.text)
 
+        #no post
+        Post.objects.all().delete()
+        self.assertEqaul(Post.objects.count(),0)
+        reponse=self.client.get('/blog/')
+        soup=BeautifulSoup(response.content, 'html.parser')
+        main_area=soup.find('div', id='main-area')
+        self.assertIn('no post yet', main_area.text)
 
