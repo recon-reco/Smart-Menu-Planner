@@ -10,7 +10,11 @@ To Do
 ＞＞http://127.0.0.1:8000/blog/category/mysql/category/python/
 >> http://127.0.0.1:8000/blog/category/mysql/4/
 **　Post Detail page : cateory error : badge and category card
-
+>>> sol:     
+    def get_absolute_url(self):
+        return f'/blog/{self.pk}' <-- "/"blog/{self.pk}
+    >> /blog/{self.pk} > domain/blog/{self.pk}
+    >> blog/{self.pk} > domain//blog/{self.pk}
 
 ー　Post 登録・修正
 ー　Post 削除

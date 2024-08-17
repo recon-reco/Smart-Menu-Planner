@@ -11,7 +11,7 @@ class Category(models.Model):
     class Meta:
         verbose_name_plural = 'Categories'
     def get_absolute_url(self):
-        return f'category/{self.slug}/'
+           return f'/blog/category/{self.slug}/'
 
 
 class Post(models.Model):
@@ -25,7 +25,8 @@ class Post(models.Model):
     category = models.ForeignKey(Category, blank=True ,null=True, on_delete=models.SET_NULL)
     #hook_text = models.CharField()
     def get_absolute_url(self):
-        return f'{self.pk}/'
+        return f'/blog/{self.pk}'
+
 
     def get_file_name(self):
         return os.path.basename(self.file_upload.name)
