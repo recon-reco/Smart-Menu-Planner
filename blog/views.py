@@ -1,7 +1,8 @@
 from typing import Any
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, redirect
+from django.views.generic import ListView, DetailView, CreateView
 from .models import Post, Category
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class PostList(ListView):
     model = Post
@@ -27,10 +28,10 @@ class PostDetail(DetailView):
 def category_page(request, slug):
     if slug =='no_category':
         category='未分類'
-        post_list = Post.objects.filter(category=None)
+        post_list = Post.objects.filter(category=None).order_by('-pk')
     else:
         category = Category.objects.get(slug=slug)
-        post_list = Post.objects.filter(category=category)
+        post_list = Post.objects.filter(category=category).order_by('-pk')
     #Instance of Category
     return render(
         request,
@@ -43,6 +44,17 @@ def category_page(request, slug):
         }
     )
     
+class PostCreate(LoginRequiredMixin,CreateView):
+    model = Post
+    fields = ['title', 'content','head_image','file_upload','category']
+
+    def form_valid(self, form):
+        current_user =self.request.user
+        if current_user.is_authenticated:
+            form.instance.author = current_user
+            return super(PostCreate, self).form_valid(form)
+        else:
+            return redirect('/blog/')
 
 
 

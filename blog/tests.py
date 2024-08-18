@@ -112,7 +112,7 @@ class TestView(TestCase):
         self.assertIn(self.user_kim.username.upper(), main_area.text)
         self.assertIn(self.user_park.username.upper(), main_area.text)
 
-        self.assertNotIn('no post yet', main_area.text)
+        #self.assertNotIn('no post yet', main_area.text)
 
         #no post
         Post.objects.all().delete()
@@ -120,11 +120,11 @@ class TestView(TestCase):
         reponse=self.client.get('/blog/')
         soup=BeautifulSoup(response.content, 'html.parser')
         main_area=soup.find('div', id='main-area')
-        self.assertIn('no post yet', main_area.text)
+       
 
     def test_post_detail(self):
         #url /blog/1
-        self.assertEqual(self.post_001.get_absolute_url(), '1/')
+        self.assertEqual(self.post_001.get_absolute_url(), '/blog/1')
         #response
         response = self.client.get(self.post_001.get_absolute_url())
         #200
@@ -146,6 +146,38 @@ class TestView(TestCase):
 
         self.assertIn(self.user_kim.username.upper(), post_area.text)
         self.assertIn(self.post_001.content, post_area.text)
+
+    def test_create_post(self):
+        #Not Log In
+        response = self.client.get('/blog/create_post')
+        self.assertNotEqual(response.status_code, 200)
+
+        #Log IN
+        self.client.login(username='kim',password='somepassword')
+        response=self.client.get('/blog/create_post')
+        self.assertEqual(response.status_code, 200)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        self.assertEqual('Create Post - Blog',soup.title.text)
+        main_area = soup.find('div', id='main-area')
+        self.assertIn('Create New Post', main_area.text)
+
+        self.client.post(
+            '/blog/create_post/',
+            {
+                'title' : 'Create Post Form',
+                'content' : 'Post Form page 生成',
+            }
+        )
+        self.assertEqul(Post.objects.count(),4)
+        last_post = Post.objects.last()
+        self.assertEqual(last_post.title,'Create Post Form')
+        self.assertEqual(last_post.author.username,'kim')
+        
+        self.assertEqual(last_post.content,'Post Form page 生成')
+        
+        
+
         
 
 

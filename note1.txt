@@ -17,6 +17,12 @@ To Do
     >> blog/{self.pk} > domain//blog/{self.pk}
 
 ー　Post 登録・修正
+> test code : response / soup / title / main_area /
+> views.py class PostCreate(CreateView) -> 'form' ->> post_form.html
+> templates : base_full_width.html -> post_form.html
+> LogInRequiredMixin : authority
+> author field : 自動登録
+
 ー　Post 削除
 ー　Tag　機能
 ー　markdown適用
