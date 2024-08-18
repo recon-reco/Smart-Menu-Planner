@@ -1,8 +1,11 @@
 from typing import Any
+from django.http import HttpRequest
+from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 
 class PostList(ListView):
     model = Post
@@ -59,5 +62,23 @@ class PostCreate(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         else:
             return redirect('/blog/')
 
+class PostUpdate(UpdateView):
+    model=Post
+    fields = ['title', 'content','head_image','file_upload','category']#tag
 
+    template_name = 'blog/post_update_form.html' #default : model_form.html
 
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        if request.user.is_authenticated and (request.user == self.get_object().author):
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionError
+
+class DeletePostView(LoginRequiredMixin, DeleteView):
+    model = Post
+    template_name = 'blog/confirm_delete.html'
+    success_url = '/blog/'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(author=self.request.user)
