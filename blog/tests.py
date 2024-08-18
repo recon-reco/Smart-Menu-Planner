@@ -10,6 +10,9 @@ class TestView(TestCase):
             username='kim',
             password='somepassword',
         )
+        self.user_kim.is_staff=True
+        self.user_kim.save()
+
         self.user_park = User.objects.create_user(
             username='park',
             password='somepassword',
@@ -151,8 +154,13 @@ class TestView(TestCase):
         #Not Log In
         response = self.client.get('/blog/create_post')
         self.assertNotEqual(response.status_code, 200)
-
-        #Log IN
+     
+        #Log In : user park
+        self.client.login(username='park', password='somepassword')
+        response=self.client.get('/blog/create_post/')
+        self.assertNotEqual(response.status_code, 200)
+        
+        #Log IN : staff kim
         self.client.login(username='kim',password='somepassword')
         response=self.client.get('/blog/create_post')
         self.assertEqual(response.status_code, 200)
