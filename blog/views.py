@@ -1,11 +1,13 @@
 from typing import Any
 from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+from .forms import CommentForm
+
 
 class PostList(ListView):
     model = Post
@@ -26,8 +28,8 @@ class PostDetail(DetailView):
         context = super(PostDetail, self).get_context_data()
         context['categories'] = Category.objects.all()#to base.html
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
+        context['comment_form']=CommentForm
         return context
-
 def category_page(request, slug):
     if slug =='no_category':
         category='未分類'
@@ -82,3 +84,20 @@ class DeletePostView(LoginRequiredMixin, DeleteView):
     def get_queryset(self):
         queryset = super().get_queryset()
         return queryset.filter(author=self.request.user)
+    
+def new_comment(request, pk):
+    if request.user.is_authenticated:
+        post=get_object_or_404(Post, pk=pk)
+
+        if request.method=='POST':
+            comment_form =CommentForm(request.POST)
+            if comment_form.is_valid():
+                comment = comment_form.save(commit=False)
+                comment.post=post
+                comment.author=request.user
+                comment.save()
+                return redirect(comment.get_absolute_url())
+        else:
+            return redirect(post.get_absolute_url())
+    else : 
+        raise PermissionDenied
