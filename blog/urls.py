@@ -8,5 +8,6 @@ urlpatterns=[
     path("category/<str:slug>/", views.category_page),
     path("create_post/", views.PostCreate.as_view()), 
     path("update_post/<int:pk>", views.PostUpdate.as_view()),
-    path('delete_post/<int:pk>/', views.DeletePostView.as_view()),
+    path("delete_post/<int:pk>/", views.DeletePostView.as_view()),
+    
 ]
