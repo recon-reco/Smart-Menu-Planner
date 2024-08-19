@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     "blog",
     "single_pages",
 
+   
+    "markdownx",
+
     "django.contrib.sites",
     "allauth",
     "allauth.account",
