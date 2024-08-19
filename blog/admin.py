@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 admin.site.register(Post)
 
@@ -7,7 +7,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug':('name',)}
 
 admin.site.register(Category, CategoryAdmin)
-
+admin.site.register(Comment)
 """
 이 코드 스니펫은 Django 프레임워크에서 관리자(admin) 인터페이스를 설정하는 방법을 보여줍니다. 각 코드의 의미와 사용된 모듈, 함수에 대해 자세히 설명하겠습니다.
 
