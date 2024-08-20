@@ -71,7 +71,17 @@ MIDDLEWARE =
 ー　Main Page(Landing Page)
 
 ー　About Me Page 改善
-
+<div class="modal fade" id="deleteCommentModal-{{comment.pk}}" tabindex="-1"role="dialog" aria-labelledby="deleteCommentModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Modal Header</h5>
+    
+        </div>
+        <div class="modal-body">
+            <h4>Modal Body!!!</h4>
+        </div>
+    </div>
 応用
 ー Docker
 - to AWS

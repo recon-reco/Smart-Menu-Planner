@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    {% include 'blog/navbar.html' %}
     <div class="container">
         <div class="row my-3">
             <div class="container">
@@ -23,49 +24,120 @@
                 </div>
             </div>
         </div>
-        <div class="row my-3">
-            <h1>Profile</h1>
-            <div class="col-sm col-lg-8">
-                <img src="{% static '/single_pages/images/IMG_4739.JPG' %}" class="img-fluid w-50">
-                <h4>パク・ソルミ（Park SolMi）</h4>
-                <h3>自己紹介</h3>
-                <p>
-                    日常生活に肯定的な影響を与えるシステムを作りたい！
-                    <br>e-mail:
-                    <br>github:
-                </p>
+        <section>
+            <div class="container mt-4">
+                <div class="row">
+                    <h1>Profile</h1>
+                    <div class="col-sm col-lg-5">
+                        <img src="{% static '/single_pages/images/IMG_4739.JPG' %}" class="img-fluid w-50">
+                    </div>
+                    <div class="col-sm col-lg-7">
+                        <h3>自己紹介</h3>
+                        <h4>パク・ソルミ（Park SolMi）</h4>
+                        <p>
+                            日常生活に肯定的な影響を与えるシステムを作りたい！
+                        </p>
+                        <ul>
+                            <li>学歴</li>
+                            <ul>
+                                <li>高校</li>
+                                <li>大学</li>
+                            </ul>
+                            <li>Projects</li>
+                            <ul>
+                                <li>Smart Menu Planner</li>
+                                <li>Distribution of Hospitals and Drugstore</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm col-lg-4">
-                <h4>Skill</h4>
-                <p>
-                    <br>Python
-                    <br>Java
-                    <br>MySQL
-                    <br>R
-                    <br>git & github
-                </p>
-                <h4>Project</h4>
+        </section>
+        <section class="bg-light margin-for-footer">
+            <div class="container mt-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h1>PORTFOLIO</h1>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card" data-bs-toggle="modal" data-bs-target="#pofol1">
+                                    <img src="{% static '/single_pages/images/1.JPG' %}" class="img-fluid w-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Smart Menu Planner</h5>
+                                        <p>KOREC IT Project</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" col">
+                                <div class="card" data-bs-toggle="modal" data-bs-target="#pofol2">
+                                    <img src="{% static '/single_pages/images/2.JPG' %}" class="img-fluid w-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Distribution</h5>
+                                        <p>Naver boostcouse</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card" data-bs-toggle="modal" data-bs-target="#pofol3">
+                                    <img src="{% static '/single_pages/images/3.JPG' %}" class="img-fluid w-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">MySimpleBlog</h5>
+                                        <p>Django</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <img src="{% static '/single_pages/images/1.JPG' %}" class="img-fluid w-100">
-            </div>
-            <div class="col">
-                <img src="{% static '/single_pages/images/2.JPG' %}" class="img-fluid w-100">
+    <!--Modal-->
+    <div class="modal fade" id="pofol1" tabindex="-1" role="dialog" aria-labelledby="pofol1ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="documment">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Modal Header</h5>
 
-            </div>
-            <div class="col">
-                <img src="{% static '/single_pages/images/3.JPG' %}" class="img-fluid w-100">
+                </div>
+                <div class="modal-body">
+                    <h4><a href="https://github.com/recon-reco/Smart-Menu-Planner">DjangoBlog GitHub Repo!</a></h4>
+                </div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="pofol2" tabindex="-1" role="dialog" aria-labelledby="pofol2ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="documment">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Modal Header</h5>
 
+                </div>
+                <div class="modal-body">
+                    <h4><a href="주피터 노트북으로 분석 보고서를 만들어서 깃헙에 올리자!">DjangoBlog GitHub Repo!</a></h4>
+                </div>
+            </div>
 
+        </div>
+    </div>
+    <div class="modal fade" id="pofol3" tabindex="-1" role="dialog" aria-labelledby="pofol3ModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="documment">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Modal Header</h5>
 
+                </div>
+                <div class="modal-body">
+                    <h4><a href="https://github.com/recon-reco/DjangoBlog">DjangoBlog GitHub Repo!</a></h4>
+                </div>
+            </div>
 
-
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
