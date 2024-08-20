@@ -2,7 +2,10 @@
 
 {% block main_area %}
 
-<h1>Blog {% if category%}<span class="'badge badge-secondary">{{category}}</span>{% endif %}</h1>
+<h1>Blog
+    {% if search_info %}<small class="text-muted">{{search_info}}</small>{% endif %}
+    {% if category%}<span class="'badge badge-secondary">{{category}}</span>{% endif %}
+</h1>
 
 {% if user.is_authenticated %}
 {% if user.is_staff or user.is_superuser %}

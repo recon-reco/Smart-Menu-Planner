@@ -1,4 +1,6 @@
 from typing import Any
+from django.db.models.query import QuerySet
+from django.db.models import Q
 from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -7,6 +9,7 @@ from .models import Post, Category, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from .forms import CommentForm
+
 
 
 class PostList(ListView):
@@ -116,6 +119,22 @@ def delete_comment(request, pk):
     post=comment.post
     if request.user.is_authenticated and request.user == comment.author:
         comment.delete()
-        return redirect(post.get_absolute_url)
+        return redirect(post.get_absolute_url())
     else:
         raise PermissionDenied
+
+class PostSearch(PostList):
+    paginate_by =None
+    
+    def get_queryset(self) :
+        q=self.kwargs['q']
+        post_list=Post.objects.filter(
+            Q(title__contains =q)
+        ).distinct()
+        return post_list
+    
+    def get_context_data(self, **kwargs):
+        context = super(PostSearch, self).get_context_data()
+        q = self.kwargs['q']
+        context['search_info'] = f'Search: {q}({self.get_queryset().count()})'
+        return context
