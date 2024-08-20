@@ -72,6 +72,16 @@
                             <div class="media-body">
                                 <h5 class="mt-0">{{comment.author.username }}::{{comment.created_at}}</h5>
                                 <p>{{comment.content|linebreaks }}</p>
+                                {% if user.is_authenticated and comment.author == user %}
+                                <a role="button" class="btn btn-sm btn-info float-right"
+                                    id="comment-{{comment.pk}}-update-btn" href="/blog/update_comment/{{comment.pk}}/"
+                                    style="float: right;">
+                                    edit
+                                </a>
+                                {% endif %}
+                                {% if comment.created_at != comment.modified_at %}
+                                <p class="text-muted float-right"><small>Updated:{{comment.modified_at}}</small></p>
+                                {% endif %}
                             </div>
                         </div>
                         {% endfor %}

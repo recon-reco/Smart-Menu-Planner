@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from bs4 import BeautifulSoup
-from .models import Post, Category
+from .models import Post, Category, Comment
 from django.contrib.auth.models import User
 
 class TestView(TestCase):
@@ -45,6 +45,12 @@ class TestView(TestCase):
             title = 'This Post has no category',
             content = 'No Category',
             author = self.user_park,
+        )
+        
+        self.comment_001 = Comment.objects.create(
+            post= "self.post_001",
+            author= "self.user_kim",
+            content='First Comment',
         )
         
     def category_card_test(self,soup):
@@ -185,6 +191,16 @@ class TestView(TestCase):
         self.assertEqual(last_post.content,'Post Form page 生成')
         
         
+    def test_comment_form(self):
+        self.assertEqual(Comment.objects.count())
+        self.assertEqual(self.post_001.comment_set.count(),1)
+        #log out
+        ## Fail Comment create form
+        # #log in 
+
+        #login&comment author -> edit 可能
+        
+
 
         
 

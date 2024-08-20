@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Post, Category
+from .models import Post, Category, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from .forms import CommentForm
@@ -101,3 +101,12 @@ def new_comment(request, pk):
             return redirect(post.get_absolute_url())
     else : 
         raise PermissionDenied
+
+class CommentUpdate(LoginRequiredMixin, UpdateView):
+    model=Comment
+    form_class=CommentForm
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        if request.user.is_authenticated and request.user ==self.get_object().author:
+            return super(CommentUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionDenied

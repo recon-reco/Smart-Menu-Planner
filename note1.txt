@@ -56,6 +56,18 @@ MIDDLEWARE =
 ー　Tag　機能
 ー　markdown適用
 ー　Comment 機能
+> admin에서 등록한 comment가 post detail에 display
+> post detail page에서 comment 작성  > comment 등록 & 웹 페이지에 display
+>> Log In -comment form / Log Out - log in modal
+>> CommentForm 
+>> comment submit -> post.pk/new_comment/ -> views.py : new_comment()
+
+   """##views.new_comment() >>     
+    path("<int:pk>/new_comment/", views.new_comment()),
+    TypeError: new_comment() missing 2 required positional arguments: 'request' and 'pk'
+    """
+>> comment 수정 
+    
 ー　Main Page(Landing Page)
 
 ー　About Me Page 改善
