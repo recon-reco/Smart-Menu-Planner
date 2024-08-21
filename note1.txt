@@ -84,6 +84,13 @@ MIDDLEWARE =
     </div>
 応用
 ー Docker
+1. 도커 설정 파일
+> 컨테이너 여러 개를 한 번에 실행시킬 수 있다.
+> 컨테이너 실행 시, 옵션을 줄 수 있다.
+2. 도커 컴포즈 파일
+
+
+
 - to AWS
 - domain 連結　：AWS, HTTPS, social login
 
