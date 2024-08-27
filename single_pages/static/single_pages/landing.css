@@ -1,13 +1,26 @@
 body {
-    background: url('/static/single_pages/images/IMG_7812.jpg') no-repeat center center fixed;
+    background: url('/static/single_pages/images/bg_landing.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding-top: 56px;
+    /*for navbar*/
 }
 
 section {
     margin-bottom: 150px;
+}
+
+.white-background {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.no-bullets {
+    list-style-type: none;
+
 }
 
 .card {

@@ -3,7 +3,7 @@
 {% block head_title %}Update Post - Blog{% endblock %}
 
 {% block main_area %}
-<h1>Update Post</h1>
+<h1>Create Post</h1>
 <hr />
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -20,7 +20,8 @@
         {% endfor %}
     </div>
     <button type="button" id="add-form" class="btn btn-success">Add Ingredient</button>
-    <button type="submit" class='btn btn-primary float-right'>Submit</button>
+    <hr />
+    <button type="submit" class='float-right'>Submit</button>
 </form>
 
 <script>

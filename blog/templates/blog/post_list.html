@@ -9,7 +9,7 @@
 
 {% if user.is_authenticated %}
 {% if user.is_staff or user.is_superuser %}
-<a class="btn btn-success btn-lg float-right" href="/blog/create_post/" role="button">New Post</a>
+<a class="btn btn-success btn-lg float-left" href="/blog/create_post/" role="button">New Post</a>
 {% endif %}
 {% endif %}
 

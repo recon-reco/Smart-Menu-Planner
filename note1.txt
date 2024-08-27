@@ -1,4 +1,18 @@
 To Do 
+- Lengh of Category Name Problem 
+>> Done 
+- Postを生成・修正の時、カテゴリー追加・削除
+- 生成された献立から必要なMainIngredien name List 生成・出力
+
+- Add Ingredient를 클릭하면 empty form이 아니라 이미 생성된 MainIngredient의 form이 복사됨... なせ。。。
+- Safari랑 Chrome에서 화면이 묘하게 다르다...
+
+- gmailでSignIn具現
+
+
+
+
+ーーDONE--
 ー　Navigation Bar test
 ー 作成者
 ー　カテゴリ

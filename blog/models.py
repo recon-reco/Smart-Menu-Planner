@@ -5,7 +5,7 @@ from markdownx.utils import markdown
 import os
 
 class Category(models.Model):
-    name = models.CharField(max_length=10, unique=True)
+    name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True, allow_unicode=True)
     """人が読めるURL生成"""
     def __str__(self):
@@ -14,6 +14,11 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
     def get_absolute_url(self):
            return f'/blog/category/{self.slug}/'
+    
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Post(models.Model):

@@ -11,19 +11,23 @@
 
 <body>
     {% include 'blog/navbar.html' %}
-    <h1>Landing Page</h1>
-
     <section>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-lg-6 text-light">
+                <div class="col-lg-6 text-dark">
+                    <br>
+                    <br>
                     <h1>My Simple Blog</h1>
-                    <p>
-                      
-                    </p>
+                    <ul class="white-background no-bullets">
+                        <li>このブログアプリはPythonとDjangoを利用して構築され、</li>
+                        <li>ユーザーはメール登録後にPostの作成・修正・削除ができます。</li>
+                        <li>登録ユーザーのみがコメントを作成できます。</li>
+                        <li>炭水化物、スープ、メイン、サブのカテゴリーを使用して週間食事計画を立てることができます。</li>
+                        <li>管理者ページを通じて、ウェブサイトのデータ管理が容易にできます。</li>
+                    </ul>
                 </div>
                 <div class="col-lg-5 mt-5">
-                    <h2 class="text-light">Blog - Recent Posts</h2>
+                    <h1 class="text-dark">Blog - Recent Posts</h1>
                     {% for post in recent_posts %}
                     <div class="card mt-1">
                         <div class="card-body">
