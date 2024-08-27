@@ -13,4 +13,5 @@ urlpatterns=[
     path("update_comment/<int:pk>/", views.CommentUpdate.as_view()),
     path("delete_comment/<int:pk>/", views.delete_comment),
     path("search/<str:q>/", views.PostSearch.as_view()),
+    path('category_posts/', views.week_menu, ),
 ]   

@@ -1,13 +1,55 @@
 {% extends 'blog/base_full_width.html' %}
-{% block head_title %}Edit Post -Blog {% endblock %}
+
+{% block head_title %}Edit Post - Blog{% endblock %}
+
 {% block main_area %}
 <h1>Edit Post</h1>
 <hr />
-<form method="post" enctype="multipart/form-data">{% csrf_token %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <table>
-        {{form}}
+        {{ form.as_p }}
     </table>
+
+    <h2>Main Ingredients</h2>
+    <div id="ingredient-formset">
+        {{ ingredient_formset.management_form }}
+        {% for form in ingredient_formset %}
+        <div class="ingredient-form">
+            {{ form.as_p }}
+            <button type="button" class="delete-form btn btn-danger">Remove</button>
+        </div>
+        {% endfor %}
+    </div>
+    <button type="button" id="add-form" class="btn btn-success">Add Ingredient</button>
     <button type="submit" class='btn btn-primary float-right'>Submit</button>
 </form>
 {{ form.media }}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const formsetContainer = document.getElementById("ingredient-formset");
+        const addFormButton = document.getElementById("add-form");
+        const totalForms = document.querySelector('#id_mainingredient_set-TOTAL_FORMS');
+
+        addFormButton.addEventListener("click", function () {
+            let currentFormCount = parseInt(totalForms.value, 10);
+            let newFormIndex = currentFormCount;
+
+            const newForm = formsetContainer.querySelector('.ingredient-form').cloneNode(true);
+            newForm.innerHTML = newForm.innerHTML.replace(/form-(\d+)-/g, `form-${newFormIndex}-`);
+            formsetContainer.appendChild(newForm);
+
+            totalForms.value = currentFormCount + 1;
+        });
+
+        formsetContainer.addEventListener("click", function (event) {
+            if (event.target.classList.contains('delete-form')) {
+                event.target.closest('.ingredient-form').remove();
+                totalForms.value = parseInt(totalForms.value, 10) - 1;
+            }
+        });
+    });
+</script>
+
 {% endblock %}

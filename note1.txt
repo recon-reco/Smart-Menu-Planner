@@ -160,6 +160,36 @@ env_file은 컨테이너에 환경 변수를 제공하는 파일을 지정합니
 이 docker-compose.yml 파일은 Django 웹 애플리케이션을 Docker 컨테이너에서 실행하기 위한 설정을 제공합니다. web 서비스는 현재 디렉토리의 Dockerfile을 기반으로 이미지를 빌드하고, Django 서버를 실행하며, 호스트와 컨테이너 간의 파일과 포트를 설정합니다.
 
 
+
+apk는 Alpine Linux의 패키지 관리 도구입니다. Alpine Linux는 경량화된 리눅스 배포판으로, apk는 Alpine Linux에서 소프트웨어 패키지를 설치하고 관리하는 데 사용됩니다.
+
+apk 패키지 관리 도구
+apk: Alpine Package Keeper의 약자로, Alpine Linux에서 패키지 설치, 제거, 업데이트 등을 관리하는 도구입니다. 다른 리눅스 배포판에서 사용하는 apt (Debian 계열)이나 yum (RedHat 계열)과 유사한 역할을 합니다.
+패키지 설명
+다음은 Dockerfile에서 설치한 각 패키지에 대한 설명입니다:
+
+PostgreSQL 개발 패키지 (postgresql-dev)
+
+설명: PostgreSQL 데이터베이스의 개발에 필요한 헤더 파일 및 라이브러리 파일을 제공합니다. 주로 PostgreSQL 클라이언트 라이브러리와 함께 C/C++ 애플리케이션에서 PostgreSQL 데이터베이스와 상호작용할 수 있도록 합니다.
+용도: Python의 psycopg2와 같은 PostgreSQL 데이터베이스 드라이버를 설치할 때 필요합니다.
+Python 개발 패키지 (python3-dev)
+
+설명: Python 개발에 필요한 헤더 파일 및 라이브러리를 포함합니다. 이 패키지는 C 확장 모듈을 컴파일하는 데 필요한 Python 헤더 파일을 제공합니다.
+용도: Python 패키지를 설치할 때, 특히 C 확장 모듈을 사용하는 경우 필요합니다. 예를 들어, numpy와 같은 패키지는 C로 작성된 부분이 있어서 이 패키지가 필요합니다.
+MUSL C 라이브러리 개발 패키지 (musl-dev)
+
+설명: musl은 Alpine Linux에서 사용하는 C 표준 라이브러리입니다. musl-dev 패키지는 musl의 헤더 파일 및 개발 라이브러리를 포함하고 있습니다.
+용도: C 언어로 작성된 애플리케이션을 컴파일할 때 필요한 라이브러리입니다.
+zlib 압축 라이브러리 개발 패키지 (zlib-dev)
+
+설명: zlib은 데이터 압축을 위한 라이브러리입니다. zlib-dev 패키지는 zlib의 헤더 파일 및 개발 라이브러리를 제공합니다.
+용도: 데이터 압축 및 해제를 수행하는 애플리케이션이나 라이브러리를 개발할 때 필요합니다. 예를 들어, 많은 Python 패키지와 애플리케이션이 이 라이브러리를 사용합니다.
+JPEG 이미지 처리 라이브러리 개발 패키지 (jpeg-dev)
+
+설명: JPEG 이미지 포맷을 처리하기 위한 라이브러리입니다. jpeg-dev 패키지는 JPEG 이미지 포맷을 읽고 쓰기 위한 헤더 파일 및 개발 라이브러리를 포함합니다.
+용도: JPEG 이미지 포맷을 사용하는 애플리케이션을 개발할 때 필요합니다. Python에서는 Pillow와 같은 이미지 처리 라이브러리가 이 패키지를 사용할 수 있습니다.햣 
+
+
 - to AWS
 - domain 連結　：AWS, HTTPS, social login
 

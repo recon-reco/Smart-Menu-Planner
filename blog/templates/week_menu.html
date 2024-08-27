@@ -1,0 +1,102 @@
+{% extends 'blog/base_full_width.html' %}
+
+{% block main_area %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Meal Plan</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container {
+            width: 80%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Weekly Meal Plan</h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Lunch</th>
+                    <th>Dinner</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for meals in week %}
+                <tr>
+                    <td>{{ forloop.counter }}</td> <!-- 순서 번호 또는 요일 표시 -->
+                    <td>
+                        {% for meal in meals|slice:"0::2" %}
+                        {{ meal }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for meal in meals|slice:"1::2" %}
+                        {{ meal }}{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Main Ingredients Table 
+    <div class="table-container">
+        <h2>Main Ingredients Required</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Meal</th>
+                    <th>Ingredients</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for day, meals in ingredients.items %}
+                {% for meal_type, ingredient_list in meals.items %}
+                <tr>
+                    <td>{{ day }}</td>
+                    <td>{{ meal_type|capfirst }}</td>
+                    <td>
+                        <ul>
+                            {% for ingredient in ingredient_list %}
+                            <li>{{ ingredient }}</li>
+                            {% empty %}
+                            <li>No ingredients</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+-->
+    {% endblock %}

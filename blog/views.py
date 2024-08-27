@@ -4,12 +4,17 @@ from django.db.models import Q
 from django.http import HttpRequest
 from django.http.response import HttpResponse as HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse_lazy, reverse
+
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post, Category, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from .forms import CommentForm
 
+import random
+
+from .forms import MainIngredientFormSet
 
 
 class PostList(ListView):
@@ -32,6 +37,7 @@ class PostDetail(DetailView):
         context['categories'] = Category.objects.all()#to base.html
         context['no_category_post_count'] = Post.objects.filter(category=None).count()
         context['comment_form']=CommentForm
+        context['main_ingredients'] = self.object.main_ingredients.all()  # MainIngredient 추가
         return context
 def category_page(request, slug):
     if slug =='no_category':
@@ -52,22 +58,65 @@ def category_page(request, slug):
         }
     )
     
-class PostCreate(LoginRequiredMixin,UserPassesTestMixin,CreateView):
+class PostCreate(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Post
-    fields = ['title', 'content','head_image','file_upload','category']
+    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
 
     def test_func(self):
-        return self.request.user.is_staff or self.request.user.is_superuser # T/F
+        return self.request.user.is_staff or self.request.user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['ingredient_formset'] = MainIngredientFormSet(self.request.POST, self.request.FILES)
+        else:
+            context['ingredient_formset'] = MainIngredientFormSet()
+        return context
 
     def form_valid(self, form):
-        current_user =self.request.user
-        if current_user.is_authenticated and (current_user.is_staff or current_user.is_superuser):
-            form.instance.author = current_user
-            return super(PostCreate, self).form_valid(form)
+        context = self.get_context_data()
+        ingredient_formset = context['ingredient_formset']
+        if ingredient_formset.is_valid():
+            form.instance.author = self.request.user
+            self.object = form.save()
+            ingredient_formset.instance = self.object
+            ingredient_formset.save()
+            return super().form_valid(form)
         else:
-            return redirect('/blog/')
+            return self.render_to_response(self.get_context_data(form=form))
+
 
 class PostUpdate(UpdateView):
+    model = Post
+    fields = ['title', 'content', 'head_image', 'file_upload', 'category']
+    template_name = 'blog/post_update_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.POST:
+            context['ingredient_formset'] = MainIngredientFormSet(self.request.POST, self.request.FILES, instance=self.object)
+        else:
+            context['ingredient_formset'] = MainIngredientFormSet(instance=self.object)
+        return context
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        ingredient_formset = context['ingredient_formset']
+        if form.is_valid() and ingredient_formset.is_valid():
+            self.object = form.save()
+            ingredient_formset.instance = self.object
+            ingredient_formset.save()
+            return super().form_valid(form)
+        return self.render_to_response(self.get_context_data(form=form))
+    def dispatch(self, request: HttpRequest, *args: Any, **kwargs: Any):
+        if request.user.is_authenticated and (request.user == self.get_object().author):
+            return super(PostUpdate, self).dispatch(request, *args, **kwargs)
+        else:
+            raise PermissionError
+    #def get_success_url(self):
+        # pk를 이용해 상세 페이지 URL을 동적으로 생성
+        #return reverse('blog/<int:pk>', kwargs={'pk': self.object.pk})
+"""class PostUpdate(UpdateView):
     model=Post
     fields = ['title', 'content','head_image','file_upload','category']#tag
 
@@ -77,7 +126,7 @@ class PostUpdate(UpdateView):
         if request.user.is_authenticated and (request.user == self.get_object().author):
             return super(PostUpdate, self).dispatch(request, *args, **kwargs)
         else:
-            raise PermissionError
+            raise PermissionError"""
 
 class DeletePostView(LoginRequiredMixin, DeleteView):
     model = Post
@@ -138,3 +187,38 @@ class PostSearch(PostList):
         q = self.kwargs['q']
         context['search_info'] = f'Search: {q}({self.get_queryset().count()})'
         return context
+    
+
+def week_menu(request):
+    # 모든 카테고리를 가져옵니다.
+    categories = Category.objects.all()
+    
+    # 카테고리별로 포스트 리스트를 저장할 딕셔너리
+    category_post_dict = {}
+
+    for category in categories:
+        # 각 카테고리별로 해당되는 포스트의 타이틀 리스트를 가져옵니다.
+        posts = Post.objects.filter(category=category)
+        post_titles = [post.title for post in posts]
+        
+        # 카테고리 이름을 키로, 포스트 타이틀 리스트를 값으로 딕셔너리에 저장합니다.
+        category_post_dict[category.name] = post_titles
+
+    # 각 카테고리별로 10개의 랜덤한 원소를 뽑아내는 리스트 생성
+    r1 = random.sample(category_post_dict['炭水化物'], 10)  # 중복 불허
+    r2 = random.sample(category_post_dict['スープ'], 10)  # 중복 불허
+    r3 = random.sample(category_post_dict['メイン'], 10)  # 중복 불허
+    r4 = [random.choice(category_post_dict['サーブ']) for _ in range(10)]  # 중복 허용
+
+    # week 리스트 초기화
+    week = [[] for _ in range(5)]
+
+    # week 리스트에 r1, r2, r3, r4의 요소 추가
+    for i in range(5):
+        week[i] += [r1[i], r1[i + 5]]
+        week[i] += [r2[i], r2[i + 5]]
+        week[i] += [r3[i], r3[i + 5]]
+        week[i] += [r4[i], r4[i + 5]]
+    print(week)
+    # week 리스트를 템플릿에 전달
+    return render(request, 'week_menu.html', {'week': week})

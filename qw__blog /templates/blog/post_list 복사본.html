@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Blog</title>
+</head>
+
+<body>
+    <h1>Blog List</h1>
+    {% for p in post_list %}
+    <hr />
+    <a hre="{{p.get_absolute_url}}">{{p.title}}</a>
+    {{p.created_at}}
+    {{p.content}}
+    {% endfor %}
+</body>
+
+</html>
