@@ -17,7 +17,7 @@ DB : SQLite3
 Version Management : git & github
 
 ## EDR
-![EDR](/DjangoBlog/EDR.png)
+![EDR](/MySimpleBlog/EDR.png)
 
 ## Main機能
 - Eメールで簡単に会員登録
