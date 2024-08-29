@@ -1,8 +1,7 @@
 # プロジェクト名　：　MySimpleBlog
 
 ## 概要
-このブログシステムは、日常生活の記録を簡単に行えるよう設計されており、<br>  　　　
-忙しい現代社会での食事計画の負担を軽減するために開発されました。　　　
+このブログシステムは、日常生活の記録を簡単に行えるよう設計されており、<br>忙しい現代社会での食事計画の負担を軽減するために開発されました。　　　
 
 ## プロジェクト期間
 2024.8.15 ~ 2024.8.27
@@ -17,7 +16,7 @@ DB : SQLite3
 Version Management : git & github
 
 ## EDR
-![EDR](https://github.com/recon-reco/MySimpleBlog/blob/main/EDR.png)
+![EDR](https://github.com/recon-reco/MySimpleBlog/blob/main/ERD.png)
 
 ## Main機能
 - Eメールで簡単に会員登録
