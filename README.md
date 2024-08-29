@@ -1,7 +1,7 @@
 # プロジェクト名　：　MySimpleBlog
 
 ## 概要
-このブログシステムは、日常生活の記録を簡単に行えるよう設計されており、  　　　
+このブログシステムは、日常生活の記録を簡単に行えるよう設計されており、<br>  　　　
 忙しい現代社会での食事計画の負担を軽減するために開発されました。　　　
 
 ## プロジェクト期間
@@ -17,7 +17,7 @@ DB : SQLite3
 Version Management : git & github
 
 ## EDR
-![EDR](/Users/solmipark/Desktop/DjangoBlog/EDR.png)
+![EDR](/DjangoBlog/EDR.png)
 
 ## Main機能
 - Eメールで簡単に会員登録
