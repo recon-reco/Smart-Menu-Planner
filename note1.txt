@@ -8,9 +8,12 @@ To Do
 - Safari랑 Chrome에서 화면이 묘하게 다르다...
 
 - gmailでSignIn具現
+- content에 이미지 넣기 (*content에 markdown 적용되어 있음)
 
 
-
+曜日別に生成された献立に必要なMainIngredientテーブルを生成
+MainIngredientを追加するAdd Ingredientボタンをクリックすると生成されるフォームを修正
+Post生成時、カテゴリ追加機能
 
 ーーDONE--
 ー　Navigation Bar test
