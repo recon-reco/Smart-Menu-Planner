@@ -48,9 +48,9 @@
                 </tr>
             </thead>
             <tbody>
-                {% for meals in week %}
+                {% for day, meals in week_with_days %}
                 <tr>
-                    <td>{{ forloop.counter }}</td> <!-- 순서 번호 또는 요일 표시 -->
+                    <td>{{ day }}</td> <!-- 순서 번호 또는 요일 표시 -->
                     <td>
                         {% for meal in meals|slice:"0::2" %}
                         {{ meal }}{% if not forloop.last %}, {% endif %}

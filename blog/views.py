@@ -220,5 +220,10 @@ def week_menu(request):
         week[i] += [r3[i], r3[i + 5]]
         week[i] += [r4[i], r4[i + 5]]
     print(week)
+
+    days_of_week = ["月", "火", "水", "木", "金"]
+    week_with_days = zip(days_of_week, week)
+
     # week 리스트를 템플릿에 전달
-    return render(request, 'week_menu.html', {'week': week})
+    #return render(request, 'week_menu.html', {'week': week,'days_of_week': days_of_week})
+    return render(request, 'week_menu.html', {'week_with_days': week_with_days})
