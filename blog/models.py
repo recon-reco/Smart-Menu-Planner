@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.text import slugify
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdown
 import os
@@ -7,7 +8,6 @@ import os
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
     slug = models.SlugField(max_length=100, unique=True, allow_unicode=True)
-    """人が読めるURL生成"""
     def __str__(self):
         return self.name
     class Meta:
@@ -17,7 +17,7 @@ class Category(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.name)# Only generate slug if it is not already set
         super(Category, self).save(*args, **kwargs)
 
 
@@ -63,7 +63,7 @@ class Comment(models.Model):
 
 class MainIngredient(models.Model):
     name = models.CharField(max_length=100)
-    quantity = models.CharField(max_length=100)
+    quantity = models.IntegerField()
     serving_size = models.IntegerField()
     post = models.ForeignKey(Post, related_name='main_ingredients', on_delete=models.CASCADE)
 

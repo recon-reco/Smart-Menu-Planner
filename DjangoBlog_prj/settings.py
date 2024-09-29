@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "blog",
     "single_pages",
 
+    'rest_framework',
    
     "markdownx",
 
