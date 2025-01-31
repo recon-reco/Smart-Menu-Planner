@@ -31,7 +31,9 @@ if os.environ.get('DJANGO_ALLOWED_HOSTS'):
 else :
     ALLOWED_HOSTS=[]
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    ".ap-northeast-2.compute.amazonaws.com",
+]
 
 
 # Application definition
