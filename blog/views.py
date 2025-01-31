@@ -190,30 +190,25 @@ class PostSearch(PostList):
     
 
 def week_menu(request):
-    # 모든 카테고리를 가져옵니다.
     categories = Category.objects.all()
-    
-    # 카테고리별로 포스트 리스트를 저장할 딕셔너리
+
     category_post_dict = {}
 
     for category in categories:
-        # 각 카테고리별로 해당되는 포스트의 타이틀 리스트를 가져옵니다.
+
         posts = Post.objects.filter(category=category)
         post_titles = [post.title for post in posts]
         
-        # 카테고리 이름을 키로, 포스트 타이틀 리스트를 값으로 딕셔너리에 저장합니다.
         category_post_dict[category.name] = post_titles
 
-    # 각 카테고리별로 10개의 랜덤한 원소를 뽑아내는 리스트 생성
-    r1 = random.sample(category_post_dict['炭水化物'], 10)  # 중복 불허
-    r2 = random.sample(category_post_dict['スープ'], 10)  # 중복 불허
-    r3 = random.sample(category_post_dict['メイン'], 10)  # 중복 불허
-    r4 = [random.choice(category_post_dict['サーブ']) for _ in range(10)]  # 중복 허용
+    r1 = random.sample(category_post_dict['炭水化物'], 10)  
+    r2 = random.sample(category_post_dict['スープ'], 10)  
+    r3 = random.sample(category_post_dict['メイン'], 10)  
+    r4 = [random.choice(category_post_dict['サーブ']) for _ in range(10)] 
 
-    # week 리스트 초기화
+
     week = [[] for _ in range(5)]
 
-    # week 리스트에 r1, r2, r3, r4의 요소 추가
     for i in range(5):
         week[i] += [r1[i], r1[i + 5]]
         week[i] += [r2[i], r2[i + 5]]
@@ -224,6 +219,4 @@ def week_menu(request):
     days_of_week = ["月", "火", "水", "木", "金"]
     week_with_days = zip(days_of_week, week)
 
-    # week 리스트를 템플릿에 전달
-    #return render(request, 'week_menu.html', {'week': week,'days_of_week': days_of_week})
     return render(request, 'week_menu.html', {'week_with_days': week_with_days})
